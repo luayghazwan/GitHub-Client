@@ -14,6 +14,7 @@
 		015DFB501E92C90900EFCD0A /* GitHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015DFB4F1E92C90900EFCD0A /* GitHub.swift */; };
 		015DFB531E92CE6800EFCD0A /* GitHubAuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015DFB521E92CE6800EFCD0A /* GitHubAuthController.swift */; };
 		015DFB571E92D5FE00EFCD0A /* GitHubToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015DFB561E92D5FE00EFCD0A /* GitHubToken.swift */; };
+		015DFB591E92EC1600EFCD0A /* FoundationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015DFB581E92EC1600EFCD0A /* FoundationExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		015DFB4F1E92C90900EFCD0A /* GitHub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHub.swift; sourceTree = "<group>"; };
 		015DFB521E92CE6800EFCD0A /* GitHubAuthController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubAuthController.swift; sourceTree = "<group>"; };
 		015DFB561E92D5FE00EFCD0A /* GitHubToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubToken.swift; sourceTree = "<group>"; };
+		015DFB581E92EC1600EFCD0A /* FoundationExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoundationExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 		015DFB541E92CE8900EFCD0A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				015DFB581E92EC1600EFCD0A /* FoundationExtensions.swift */,
 				015DFB3D1E92B0A000EFCD0A /* AppDelegate.swift */,
 				015DFB521E92CE6800EFCD0A /* GitHubAuthController.swift */,
 			);
@@ -168,6 +171,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				015DFB571E92D5FE00EFCD0A /* GitHubToken.swift in Sources */,
+				015DFB591E92EC1600EFCD0A /* FoundationExtensions.swift in Sources */,
 				015DFB501E92C90900EFCD0A /* GitHub.swift in Sources */,
 				015DFB531E92CE6800EFCD0A /* GitHubAuthController.swift in Sources */,
 				015DFB3E1E92B0A000EFCD0A /* AppDelegate.swift in Sources */,
