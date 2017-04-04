@@ -10,6 +10,10 @@ import UIKit
 
 class GitHubAuthController: UIViewController {
 
+    @IBOutlet weak var loginButton: UIButton!
+    
+    
+    
     @IBAction func printTokenPressed(_ sender: Any) {
     }
     @IBAction func loginButtonPressed(_ sender: Any) {
@@ -17,13 +21,23 @@ class GitHubAuthController: UIViewController {
         
         GitHub.shared.oAuthRequestWith(parameters: parameters)
         
+
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let tokenChecker = UserDefaults.standard.getAccessToken()
         
-
+        if tokenChecker != nil {
+            
+            self.loginButton.backgroundColor = UIColor(rgb: 0xCCCCCC)
+            self.loginButton.isUserInteractionEnabled = false
+        }
+        
     }
 
 }
+
+

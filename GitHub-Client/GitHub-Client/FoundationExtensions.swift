@@ -10,7 +10,8 @@ import Foundation
 
 extension UserDefaults {
     //accessor method to spit out token if it has one
-    func getAccessToken()-> String? {
+    func getAccessToken() -> String? {
+        
         //access the token inside the user's default .. give me the string for the access_token
         guard let token = UserDefaults.standard.string(forKey: "access_token") else { return nil }
         
