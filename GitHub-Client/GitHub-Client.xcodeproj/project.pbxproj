@@ -15,6 +15,7 @@
 		015DFB531E92CE6800EFCD0A /* GitHubAuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015DFB521E92CE6800EFCD0A /* GitHubAuthController.swift */; };
 		015DFB571E92D5FE00EFCD0A /* GitHubToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015DFB561E92D5FE00EFCD0A /* GitHubToken.swift */; };
 		015DFB591E92EC1600EFCD0A /* FoundationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015DFB581E92EC1600EFCD0A /* FoundationExtensions.swift */; };
+		019C33681E932CCF0071D7BC /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019C33671E932CCF0071D7BC /* UIExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		015DFB521E92CE6800EFCD0A /* GitHubAuthController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubAuthController.swift; sourceTree = "<group>"; };
 		015DFB561E92D5FE00EFCD0A /* GitHubToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubToken.swift; sourceTree = "<group>"; };
 		015DFB581E92EC1600EFCD0A /* FoundationExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoundationExtensions.swift; sourceTree = "<group>"; };
+		019C33671E932CCF0071D7BC /* UIExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,22 +62,22 @@
 		015DFB3C1E92B0A000EFCD0A /* GitHub-Client */ = {
 			isa = PBXGroup;
 			children = (
-				015DFB551E92D4A200EFCD0A /* Views */,
+				015DFB511E92C94A00EFCD0A /* Model */,
 				015DFB541E92CE8900EFCD0A /* Controllers */,
+				015DFB551E92D4A200EFCD0A /* Views */,
 				015DFB441E92B0A000EFCD0A /* Assets.xcassets */,
 				015DFB491E92B0A000EFCD0A /* Info.plist */,
-				015DFB511E92C94A00EFCD0A /* GitHub OAuth */,
 			);
 			path = "GitHub-Client";
 			sourceTree = "<group>";
 		};
-		015DFB511E92C94A00EFCD0A /* GitHub OAuth */ = {
+		015DFB511E92C94A00EFCD0A /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				015DFB561E92D5FE00EFCD0A /* GitHubToken.swift */,
 				015DFB4F1E92C90900EFCD0A /* GitHub.swift */,
+				015DFB561E92D5FE00EFCD0A /* GitHubToken.swift */,
 			);
-			name = "GitHub OAuth";
+			name = Model;
 			sourceTree = "<group>";
 		};
 		015DFB541E92CE8900EFCD0A /* Controllers */ = {
@@ -91,6 +93,7 @@
 		015DFB551E92D4A200EFCD0A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				019C33671E932CCF0071D7BC /* UIExtensions.swift */,
 				015DFB411E92B0A000EFCD0A /* Main.storyboard */,
 				015DFB461E92B0A000EFCD0A /* LaunchScreen.storyboard */,
 			);
@@ -173,6 +176,7 @@
 				015DFB571E92D5FE00EFCD0A /* GitHubToken.swift in Sources */,
 				015DFB591E92EC1600EFCD0A /* FoundationExtensions.swift in Sources */,
 				015DFB501E92C90900EFCD0A /* GitHub.swift in Sources */,
+				019C33681E932CCF0071D7BC /* UIExtensions.swift in Sources */,
 				015DFB531E92CE6800EFCD0A /* GitHubAuthController.swift in Sources */,
 				015DFB3E1E92B0A000EFCD0A /* AppDelegate.swift in Sources */,
 			);
@@ -340,6 +344,7 @@
 				015DFB4E1E92B0A000EFCD0A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

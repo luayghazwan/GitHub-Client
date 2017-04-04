@@ -37,21 +37,36 @@ class GitHub {
         print("Parameters String: \(parametersString)")
         
         if let requestURL = URL(string: "\(kOAuthBaseURLString)authorize?client_id=\(gitHubClientID)\(parametersString)"){
-            print(requestURL.absoluteString) //Stringifiying the URL with Absolute
             
             UIApplication.shared.open(requestURL)
+            
+            print(requestURL.absoluteString) //Stringifiying the URL with Absolute
         }
     }
     
-    //we will try to get a URL , otherwise throw the error defined in the enum
+    //This function extract the wanted Code from the URL
     func getCodeFrom(url: URL) throws -> String {
-        
-        
+    
         //seperate the components by '=' .. taking the strings and returning array of strings
+        
+        print(url.absoluteString)
         guard let code = url.absoluteString.components(separatedBy: "=").last else {throw GitHubAuthError.extractingCode
         }
+        print("this is the code:\(code)")
         return code
     }
+    
+//    func getTokenFrom(longString: String) throws -> String {
+//        
+//        guard let token = longString.absoluteString.components(seperatedBy: "=" && "&") else {throw GitHubAuthError.extractingCode}
+//        
+//        UserDefaults.standard.save(token)
+//        
+//        return token
+//        
+//    }
+    
+    
     
     //escaping because its asynchronous
     func tokenRequestFor(url: URL, saveOptions: SaveOptions, completion: @escaping GitHubOAuthCompletion) {
@@ -84,19 +99,20 @@ class GitHub {
                     if let dataString = String(data: data, encoding: .utf8){
                         print(dataString)
                         
+                        UserDefaults.standard.save(accessToken: dataString)
+                        
                         complete(success: true)
                     }
+
                     
                 }).resume() //The most common bug to start or resume the dataTask
             }
+            
         
         } catch { //'catch let error' error is implied
             print(error)
             complete(success: false)
         }
-        
-        
-        
         
     }
 }
