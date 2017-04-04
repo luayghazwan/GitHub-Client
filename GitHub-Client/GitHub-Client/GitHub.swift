@@ -25,7 +25,15 @@ enum GitHubAuthError : Error {
 
 class GitHub {
     
+    private var session: URLSession
+    private var components: URLComponents
+    
     static let shared = GitHub()
+    
+    private init(){
+        self.session = URLSession(configuration: .default)
+        self.components = URLComponents()
+    }
     
     func oAuthRequestWith(parameters: [String : String]){
         var parametersString = "" //will represent everything after the ? mark
