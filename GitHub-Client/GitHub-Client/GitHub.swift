@@ -129,21 +129,17 @@ class GitHub {
                         
                         let onlyToken = self.accessTokenFrom(dataString)
                         
-                        UserDefaults.standard.save(accessToken: onlyToken!)
+//                        print(onlyToken)
                         
+                        UserDefaults.standard.save(accessToken: onlyToken!)
                         complete(success: true)
                     }
-
-                    
                 }).resume() //The most common bug to start or resume the dataTask
             }
-            
-        
         } catch { //'catch let error' error is implied
             print(error)
             complete(success: false)
         }
-        
     }
     
     func getRepos(completion: @escaping FetchReposCompletion){
@@ -166,30 +162,20 @@ class GitHub {
                 
                 var repositories = [Repository]()
                 
-                
                 //JSON we are getting from API - JSON serialization required do/catch
                 do {
                     if let rootJson = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [[String : Any]] {
-                        
                         print(rootJson)
-                        
                         for repositoryJSON in rootJson {
                             if let repo = Repository(json: repositoryJSON){
                                 repositories.append(repo)
                             }
                         }
                         returnToMain(results: repositories)
-                        
                     }
                 } catch {
-                    
-                    
-                    
                 }
-                
             }
-            
         }.resume()
-        
     }
 }

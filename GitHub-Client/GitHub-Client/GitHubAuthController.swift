@@ -27,7 +27,7 @@ class GitHubAuthController: UIViewController {
     }
     
     func dismissAuthController(){
-        //if this auth controller is presented over other controllers,  we will remove the view the controller
+        //if this auth controller is presented over other controllers,  we will remove the view of the controller
         self.view.removeFromSuperview()
         self.removeFromParentViewController()
         
@@ -47,5 +47,3 @@ class GitHubAuthController: UIViewController {
     }
 
 }
-
-

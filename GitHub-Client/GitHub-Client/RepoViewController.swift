@@ -15,6 +15,11 @@ class RepoViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
+        let name : String
+        let description : String
+        let language : String
+        
+        
         update()
     }
     
