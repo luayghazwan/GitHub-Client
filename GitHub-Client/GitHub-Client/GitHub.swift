@@ -12,6 +12,7 @@ import UIKit
 let kOAuthBaseURLString = "https://github.com/login/oauth/"
 
 typealias GitHubOAuthCompletion = (Bool)->()
+typealias FetchReposCompletion = ([Repository]?)->()
 
 //save the token in memory
 // userDefaults is almost identical to local Storage
@@ -33,6 +34,17 @@ class GitHub {
     private init(){
         self.session = URLSession(configuration: .default)
         self.components = URLComponents()
+        
+        //we specify the protocol (in this case HTTPS) used to bring the repo data back
+        self.components.scheme = "https"
+        self.components.host = "api.github.com"
+        
+        if let token = UserDefaults.standard.getAccessToken(){
+            //getting the item from the userDefaults
+            let queryItem = URLQueryItem(name: "access_token", value: token)
+            
+            self.components.queryItems = [queryItem]
+        }
     }
     
     func oAuthRequestWith(parameters: [String : String]){
@@ -131,6 +143,53 @@ class GitHub {
             print(error)
             complete(success: false)
         }
+        
+    }
+    
+    func getRepos(completion: @escaping FetchReposCompletion){
+        
+        func returnToMain(results: [Repository]?){
+            OperationQueue.main.addOperation {
+                completion(results)
+            }
+        }
+        
+        self.components.path = "/user/repos"
+        
+        guard let url = self.components.url else { returnToMain(results: nil); return}
+        
+        self.session.dataTask(with: url) { (data, response, error) in
+            
+            if error != nil { returnToMain(results: nil) ; return }
+            
+            if let data = data {
+                
+                var repositories = [Repository]()
+                
+                
+                //JSON we are getting from API - JSON serialization required do/catch
+                do {
+                    if let rootJson = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [[String : Any]] {
+                        
+                        print(rootJson)
+                        
+                        for repositoryJSON in rootJson {
+                            if let repo = Repository(json: repositoryJSON){
+                                repositories.append(repo)
+                            }
+                        }
+                        returnToMain(results: repositories)
+                        
+                    }
+                } catch {
+                    
+                    
+                    
+                }
+                
+            }
+            
+        }.resume()
         
     }
 }

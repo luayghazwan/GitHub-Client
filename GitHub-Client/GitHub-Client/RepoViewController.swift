@@ -14,10 +14,19 @@ class RepoViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        update()
     }
     
     func update(){
         print("Update repo controller here!")
+        
+        GitHub.shared.getRepos { (repositories) in
+            print(repositories?.first)
+            
+            //update tableView
+            
+        }
     }
 
 }

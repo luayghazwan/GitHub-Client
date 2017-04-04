@@ -8,7 +8,7 @@
 
 import Foundation
 
-class repository {
+class Repository {
     
     let name: String
     let description: String?
