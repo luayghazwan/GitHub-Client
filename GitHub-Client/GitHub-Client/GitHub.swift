@@ -48,7 +48,6 @@ class GitHub {
     func getCodeFrom(url: URL) throws -> String {
     
         //seperate the components by '=' .. taking the strings and returning array of strings
-        
         print(url.absoluteString)
         guard let code = url.absoluteString.components(separatedBy: "=").last else {throw GitHubAuthError.extractingCode
         }
@@ -56,32 +55,24 @@ class GitHub {
         return code
     }
     
-//    func getTokenFrom(longString: String) throws -> String {
-//        
-//        guard let token = longString.components( separatedBy: "=", separatedBy: "&")  else {throw GitHubAuthError.extractingCode}
-//        
-//        UserDefaults.standard.save(token)
-//        
-//        return token
-//    }
-//    
-//    func accessTokenFrom(_ string: String) -> String? {
-//        print(print)
-//        
-//        if string.contains("access_token"){
-//            let components = string.components(seperatedBy: "&")
-//            
-//            for component in components {
-//                if component.contains("access_token"){
-//                    let token = component.components(seperatedBy: "=").last
-//                    
-//                    return token
-//                }
-//                
-//            }
-//        }
-//        return nil
-//    }
+    
+    func accessTokenFrom(_ string: String) -> String? {
+        print(print)
+        
+        if string.contains("access_token"){
+            
+            let components = string.components(separatedBy: "&")
+            for component in components {
+                if component.contains("access_token"){
+                    let token = component.components(separatedBy: "=").last
+                    
+                    return token
+                }
+                
+            }
+        }
+        return nil
+    }
     
     
     
@@ -116,7 +107,9 @@ class GitHub {
                     if let dataString = String(data: data, encoding: .utf8){
                         print(dataString)
                         
-                        UserDefaults.standard.save(accessToken: dataString)
+                        let onlyToken = self.accessTokenFrom(dataString)
+                        
+                        UserDefaults.standard.save(accessToken: onlyToken!)
                         
                         complete(success: true)
                     }
