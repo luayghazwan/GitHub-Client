@@ -9,6 +9,14 @@
 import Foundation
 import UIKit
 
+extension UIResponder {
+//    computed property
+    static var identifier:String {
+        return String(describing: self)
+    }
+    
+}
+
 //MARK: HEX Color extension
 extension UIColor {
     convenience init(red: Int, green: Int, blue: Int) {

@@ -11,12 +11,49 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    
+    //we use window so we can get to the root view controller
     var window: UIWindow?
+    
+    var authController : GitHubAuthController?
+    var repoController : RepoViewController?
+    
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        if let token = UserDefaults.standard.getAccessToken(){
+            print(token)
+            
+        } else {
+            //the method we wrote
+            presentAuthController()
+        }
+        
         return true
+    }
+    
+    func presentAuthController(){
+        
+        //setting our root window as RepoViewController then getting the story board of the controller .... self here points to the UIWindow
+        if let repoViewController = self.window?.rootViewController as? RepoViewController, let storyboard = repoViewController.storyboard {
+            
+            //instantiate, initializig the controller from Storyboard. The idenftifier we assigned in Story Board Identifiter
+            if let authViewController = storyboard.instantiateViewController(withIdentifier: GitHubAuthController.identifier) as? GitHubAuthController {
+                
+                //making this view a container controller that has a child authViewController
+                repoViewController.addChildViewController(authViewController)
+                
+                //take all of the conetents and apply them on repoViewController to show on screen
+                repoViewController.view.addSubview(authViewController.view)
+                
+                authViewController.didMove(toParentViewController: repoViewController)
+                
+                self.authController = authViewController
+                self.repoController = repoViewController
+            }
+        }
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
@@ -26,10 +63,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print(code as Any)
         
         GitHub.shared.tokenRequestFor(url: url, saveOptions: .userDefaults) { (success) in
-            if success {
-                print("YAY! Acess Token")
-            } else {
-                print("Bummer! No token")
+            
+            //auth (child) dismiss, remove itself from screen ... repoView (parent) to update, show back on screen
+            if let authViewController = self.authController, let repoViewController = self.repoController {
+                
+                authViewController.dismissAuthController()
+                repoViewController.update()
+                
             }
         }
         

@@ -58,12 +58,29 @@ class GitHub {
     
 //    func getTokenFrom(longString: String) throws -> String {
 //        
-//        guard let token = longString.absoluteString.components(seperatedBy: "=" && "&") else {throw GitHubAuthError.extractingCode}
+//        guard let token = longString.components( separatedBy: "=", separatedBy: "&")  else {throw GitHubAuthError.extractingCode}
 //        
 //        UserDefaults.standard.save(token)
 //        
 //        return token
+//    }
+//    
+//    func accessTokenFrom(_ string: String) -> String? {
+//        print(print)
 //        
+//        if string.contains("access_token"){
+//            let components = string.components(seperatedBy: "&")
+//            
+//            for component in components {
+//                if component.contains("access_token"){
+//                    let token = component.components(seperatedBy: "=").last
+//                    
+//                    return token
+//                }
+//                
+//            }
+//        }
+//        return nil
 //    }
     
     
