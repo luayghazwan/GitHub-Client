@@ -12,6 +12,7 @@ import UIKit
 let kOAuthBaseURLString = "https://github.com/login/oauth/"
 
 typealias GitHubOAuthCompletion = (Bool)->()
+typealias FetchReposCompletion = ([Repository]?)->()
 
 //save the token in memory
 // userDefaults is almost identical to local Storage
@@ -25,7 +26,23 @@ enum GitHubAuthError : Error {
 
 class GitHub {
     
+    
+    private var session: URLSession
+    private var components: URLComponents
+    
     static let shared = GitHub()
+    
+    var repositoriesArray = [Repository]()
+    
+    private init(){
+        self.session = URLSession(configuration: .default)
+        self.components = URLComponents()
+        
+        //we specify the protocol (in this case HTTPS) used to bring the repo data back
+        self.components.scheme = "https"
+        self.components.host = "api.github.com"
+    
+    }
     
     func oAuthRequestWith(parameters: [String : String]){
         var parametersString = "" //will represent everything after the ? mark
@@ -48,7 +65,6 @@ class GitHub {
     func getCodeFrom(url: URL) throws -> String {
     
         //seperate the components by '=' .. taking the strings and returning array of strings
-        
         print(url.absoluteString)
         guard let code = url.absoluteString.components(separatedBy: "=").last else {throw GitHubAuthError.extractingCode
         }
@@ -56,30 +72,33 @@ class GitHub {
         return code
     }
     
-//    func getTokenFrom(longString: String) throws -> String {
-//        
-//        guard let token = longString.absoluteString.components(seperatedBy: "=" && "&") else {throw GitHubAuthError.extractingCode}
-//        
-//        UserDefaults.standard.save(token)
-//        
-//        return token
-//        
-//    }
     
+    func accessTokenFrom(_ string: String) -> String? {
+        print(print)
+        
+        if string.contains("access_token"){
+            
+            let components = string.components(separatedBy: "&")
+            for component in components {
+                if component.contains("access_token"){
+                    let token = component.components(separatedBy: "=").last
+                    
+                    return token
+                }
+                
+            }
+        }
+        return nil
+    }
     
-    
-    //escaping because its asynchronous
     func tokenRequestFor(url: URL, saveOptions: SaveOptions, completion: @escaping GitHubOAuthCompletion) {
         
-        
-        //by making this function we wont need to add OPerationQueue everytime
         func complete(success: Bool){
             OperationQueue.main.addOperation {
                 completion(success)
             }
         }
         
-        //get my code
         do{
             let code = try self.getCodeFrom(url: url)
             
@@ -99,20 +118,66 @@ class GitHub {
                     if let dataString = String(data: data, encoding: .utf8){
                         print(dataString)
                         
-                        UserDefaults.standard.save(accessToken: dataString)
+//                        let onlyToken =
+                        
+//                        print(onlyToken)
+                        
+                        if UserDefaults.standard.save(accessToken: self.accessTokenFrom(dataString)!) {
+                            print("Token Saved")
+                        }
                         
                         complete(success: true)
                     }
-
-                    
                 }).resume() //The most common bug to start or resume the dataTask
             }
-            
-        
         } catch { //'catch let error' error is implied
             print(error)
             complete(success: false)
         }
+    }
+    
+    func getRepos(completion: @escaping FetchReposCompletion){
         
+        if let token = UserDefaults.standard.getAccessToken(){
+            let queryItem = URLQueryItem(name: "access_token", value: token)
+            self.components.queryItems = [queryItem]
+        }
+        
+        func returnToMain(results: [Repository]?){
+            OperationQueue.main.addOperation {
+                completion(results)
+            }
+        }
+        
+        self.components.path = "/user/repos"
+        
+        guard let url = self.components.url else { returnToMain(results: nil); return}
+        
+        self.session.dataTask(with: url) { (data, response, error) in
+            
+            if error != nil { returnToMain(results: nil) ; return }
+            
+            if let data = data {
+                
+                var repositories = [Repository]()
+                
+                //JSON we are getting from API - JSON serialization required do/catch
+                do {
+                    if let rootJson = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [[String : Any]] {
+//                        print(rootJson)
+                        for repositoryJSON in rootJson {
+                            if let repo = Repository(json: repositoryJSON){
+//                                print(repo.name)
+                                repositories.append(repo)
+                            }
+                        }
+                        self.repositoriesArray = repositories
+
+                        returnToMain(results: repositories)
+                    }
+                } catch {
+                }
+            }
+        }.resume()
     }
 }
