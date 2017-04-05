@@ -26,10 +26,13 @@ enum GitHubAuthError : Error {
 
 class GitHub {
     
+    
     private var session: URLSession
     private var components: URLComponents
     
     static let shared = GitHub()
+    
+    var repositoriesArray = [Repository]()
     
     private init(){
         self.session = URLSession(configuration: .default)
@@ -38,13 +41,7 @@ class GitHub {
         //we specify the protocol (in this case HTTPS) used to bring the repo data back
         self.components.scheme = "https"
         self.components.host = "api.github.com"
-        
-        if let token = UserDefaults.standard.getAccessToken(){
-            //getting the item from the userDefaults
-            let queryItem = URLQueryItem(name: "access_token", value: token)
-            
-            self.components.queryItems = [queryItem]
-        }
+    
     }
     
     func oAuthRequestWith(parameters: [String : String]){
@@ -94,20 +91,14 @@ class GitHub {
         return nil
     }
     
-    
-    
-    //escaping because its asynchronous
     func tokenRequestFor(url: URL, saveOptions: SaveOptions, completion: @escaping GitHubOAuthCompletion) {
         
-        
-        //by making this function we wont need to add OPerationQueue everytime
         func complete(success: Bool){
             OperationQueue.main.addOperation {
                 completion(success)
             }
         }
         
-        //get my code
         do{
             let code = try self.getCodeFrom(url: url)
             
@@ -127,11 +118,14 @@ class GitHub {
                     if let dataString = String(data: data, encoding: .utf8){
                         print(dataString)
                         
-                        let onlyToken = self.accessTokenFrom(dataString)
+//                        let onlyToken =
                         
 //                        print(onlyToken)
                         
-                        UserDefaults.standard.save(accessToken: onlyToken!)
+                        if UserDefaults.standard.save(accessToken: self.accessTokenFrom(dataString)!) {
+                            print("Token Saved")
+                        }
+                        
                         complete(success: true)
                     }
                 }).resume() //The most common bug to start or resume the dataTask
@@ -143,6 +137,11 @@ class GitHub {
     }
     
     func getRepos(completion: @escaping FetchReposCompletion){
+        
+        if let token = UserDefaults.standard.getAccessToken(){
+            let queryItem = URLQueryItem(name: "access_token", value: token)
+            self.components.queryItems = [queryItem]
+        }
         
         func returnToMain(results: [Repository]?){
             OperationQueue.main.addOperation {
@@ -165,12 +164,15 @@ class GitHub {
                 //JSON we are getting from API - JSON serialization required do/catch
                 do {
                     if let rootJson = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [[String : Any]] {
-                        print(rootJson)
+//                        print(rootJson)
                         for repositoryJSON in rootJson {
                             if let repo = Repository(json: repositoryJSON){
+//                                print(repo.name)
                                 repositories.append(repo)
                             }
                         }
+                        self.repositoriesArray = repositories
+
                         returnToMain(results: repositories)
                     }
                 } catch {

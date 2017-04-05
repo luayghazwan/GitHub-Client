@@ -19,7 +19,6 @@ class Repository {
             self.name = name
             self.description = json["description"] as? String
             self.language = json["language"] as? String
-            
         } else {
             return nil
         }
