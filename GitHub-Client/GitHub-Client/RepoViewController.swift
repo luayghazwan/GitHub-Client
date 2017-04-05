@@ -47,9 +47,7 @@ class RepoViewController: UIViewController, UISearchBarDelegate {
             for repo in repositories! {
                 self.allRepos.append(repo)
             }
-//            RepoCell.repoName.text = repositories?.first?.description
-            
-            
+            //RepoCell.repoName.text = repositories?.first?.description
         }
     }
     

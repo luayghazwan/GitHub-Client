@@ -36,7 +36,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1vP-jY-2bG">
-                                <rect key="frame" x="16" y="308" width="343" height="50"/>
+                                <rect key="frame" x="16" y="514" width="343" height="50"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="RNE-Wo-DcS"/>
@@ -48,16 +48,25 @@
                                     <action selector="printTokenPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Hjp-LG-3gb"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="github-logo" translatesAutoresizingMaskIntoConstraints="NO" id="eg4-Bd-APG">
+                                <rect key="frame" x="87" y="233.5" width="200" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="B1c-yd-KxC"/>
+                                    <constraint firstAttribute="height" constant="200" id="KxL-Kp-T8k"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="eg4-Bd-APG" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="0yB-SM-XyI"/>
                             <constraint firstItem="ZgV-NT-VDZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="16" id="7wC-p8-9pY"/>
                             <constraint firstAttribute="trailing" secondItem="ZgV-NT-VDZ" secondAttribute="trailing" constant="16" id="92Y-jZ-Ygx"/>
                             <constraint firstAttribute="trailingMargin" secondItem="1vP-jY-2bG" secondAttribute="trailing" id="Io0-8S-Jt1"/>
                             <constraint firstItem="1vP-jY-2bG" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Nwd-iL-fHV"/>
-                            <constraint firstItem="1vP-jY-2bG" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Rd7-lC-BuX"/>
+                            <constraint firstItem="1vP-jY-2bG" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="205.5" id="Rd7-lC-BuX"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ZgV-NT-VDZ" secondAttribute="bottom" constant="20" id="XWE-JU-pkQ"/>
                             <constraint firstItem="1vP-jY-2bG" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="e4x-2R-WyT"/>
+                            <constraint firstItem="eg4-Bd-APG" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="gCi-Oe-dzh"/>
                         </constraints>
                     </view>
                     <connections>
@@ -93,21 +102,21 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eAF-Me-pQA">
-                                                    <rect key="frame" x="8" y="8" width="45" height="21"/>
+                                                    <rect key="frame" x="8" y="8" width="359" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cMR-Lt-Wsx">
-                                                    <rect key="frame" x="8" y="37" width="88" height="21"/>
+                                                    <rect key="frame" x="8" y="37" width="359" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Programming" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PBj-uD-TtB">
-                                                    <rect key="frame" x="8" y="66" width="104" height="21"/>
+                                                    <rect key="frame" x="8" y="66" width="359" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -141,4 +150,7 @@
             <point key="canvasLocation" x="920.79999999999995" y="89.505247376311857"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="github-logo" width="1500" height="1125"/>
+    </resources>
 </document>
