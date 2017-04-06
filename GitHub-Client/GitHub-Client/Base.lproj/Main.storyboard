@@ -187,6 +187,16 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MQP-Xb-dHa">
+                                <rect key="frame" x="80" y="480" width="215" height="30"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="More Details">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="moreDetailsPressed:" destination="9YO-04-HSr" eventType="touchUpInside" id="aG5-Lr-fJV"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.81623160839080811" green="0.82635563611984253" blue="0.71603411436080933" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -202,6 +212,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="pyq-vU-qRT" secondAttribute="trailing" constant="20" id="FDi-dp-czk"/>
                             <constraint firstAttribute="trailing" secondItem="mWB-H2-ONq" secondAttribute="trailing" constant="80" id="GLG-bh-r0U"/>
                             <constraint firstItem="0UM-nq-BOI" firstAttribute="leading" secondItem="bVa-EV-dFU" secondAttribute="leadingMargin" constant="25" id="Ib6-Lq-oTf"/>
+                            <constraint firstItem="MQP-Xb-dHa" firstAttribute="centerY" secondItem="bVa-EV-dFU" secondAttribute="centerY" constant="161.5" id="MW8-gC-YdQ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="0UM-nq-BOI" secondAttribute="trailing" constant="20" id="Qpc-F8-hfo"/>
                             <constraint firstAttribute="trailingMargin" secondItem="DG5-3d-Qvp" secondAttribute="trailing" constant="20" id="UaB-4n-dT1"/>
                             <constraint firstItem="QEQ-TK-DFe" firstAttribute="top" secondItem="DG5-3d-Qvp" secondAttribute="bottom" constant="8" id="Ww6-WP-8al"/>
@@ -214,6 +225,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="pDi-KB-V6O" secondAttribute="trailing" constant="20" id="g9s-Ed-Fg3"/>
                             <constraint firstItem="Gg1-rU-T5I" firstAttribute="leading" secondItem="bVa-EV-dFU" secondAttribute="leadingMargin" constant="25" id="iRl-th-EH9"/>
                             <constraint firstItem="mWB-H2-ONq" firstAttribute="leading" secondItem="bVa-EV-dFU" secondAttribute="leading" constant="80" id="nOs-xV-96Y"/>
+                            <constraint firstItem="MQP-Xb-dHa" firstAttribute="centerX" secondItem="bVa-EV-dFU" secondAttribute="centerX" id="rHa-uy-Odx"/>
                             <constraint firstAttribute="trailingMargin" secondItem="lKy-el-piQ" secondAttribute="trailing" constant="20" id="rPD-7p-RYv"/>
                             <constraint firstItem="lKy-el-piQ" firstAttribute="top" secondItem="Gg1-rU-T5I" secondAttribute="bottom" constant="8" id="x55-v6-2Dz"/>
                         </constraints>

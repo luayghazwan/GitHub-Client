@@ -7,8 +7,12 @@
 //
 
 import UIKit
+import SafariServices
 
 class RepoDetailViewController: UIViewController {
+    
+    var repo : Repository!
+
     
     @IBOutlet weak var repoName: UILabel!
     
@@ -29,6 +33,34 @@ class RepoDetailViewController: UIViewController {
   
     @IBOutlet weak var dismissOutlet: UIButton!
 
+    @IBAction func moreDetailsPressed(_ sender: Any) {
+        
+        guard let repo = repo else {return}
+        
+//        presentWebViewControllerWith(urlString: repo.repoUrlString)
+        
+        presentSafariViewControllerWith(urlString: repo.repoUrlString)
+        
+    }
+    
+    func presentSafariViewControllerWith(urlString: String) {
+        guard let url = URL(string: urlString) else { return }
+        
+        let safariController = SFSafariViewController(url: url)
+        
+        self.present(safariController, animated: true, completion: nil)
+    }
+    
+    func presentWebViewControllerWith(urlString: String){
+        
+        let webController = WebViewController()
+        
+        webController.url = urlString
+        
+        self.present(webController, animated: true, completion: nil)
+    }
+    
+    
     
     @IBAction func closeDetailController(_ sender: Any) {
         
@@ -36,10 +68,11 @@ class RepoDetailViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
 
-    var repo : Repository!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        self.UIViewControllerTransitioningDelegate = self
         
         self.dismissOutlet.layer.shadowColor = UIColor.gray.cgColor
         self.dismissOutlet.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
@@ -71,4 +104,8 @@ class RepoDetailViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
+}
+
+extension RepoDetailViewController : UIViewControllerTransitioningDelegate {
+//    func anim
 }

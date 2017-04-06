@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension UserDefaults {
     //accessor method to spit out token if it has one
@@ -24,6 +25,57 @@ extension UserDefaults {
         
          //sync all data in our defaults.. returns Boolean .. tell if it was successful or not
         return UserDefaults.standard.synchronize()
+        
+    }
+
+    
+}
+
+extension Date {
+    
+    var shortStyle : String {
+        let shortFromatter = formatterWith(style: .short)
+        return shortFromatter.string(from: self)
+    }
+    
+    var mediumStyle : String {
+        return formatterWith(style: .medium).string(from: self)
+    }
+    
+    var longStyle : String {
+        return formatterWith(style: .long).string(from: self)
+    }
+    
+    private func formatterWith(style: DateFormatter.Style) -> DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateStyle = style
+        return formatter
+    }
+    
+}
+
+extension String {
+    
+    func validate() -> Bool {
+        
+        let pattern = "[^0-9a-zA-Z_-]"
+        
+        do {
+            let regex = try NSRegularExpression(pattern: pattern, options: .caseInsensitive)
+            
+            let range = NSRange(location: 0, length: self.characters.count)
+            
+            let matches = regex.numberOfMatches(in: self, options: .reportCompletion, range: range)
+            
+            if matches > 0 {
+                return false
+            }
+            
+            return true
+            
+        } catch {
+            return false
+        }
         
     }
 }

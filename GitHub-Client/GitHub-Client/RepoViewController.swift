@@ -16,13 +16,12 @@ class RepoViewController: UIViewController {
         }
     }
     
-    
     //for the search bar .. we want it to be flexible in search, we might return nil if we look up something that deosnt exitst
-//    var displayRepos: [Repository]?{
-//        didSet{
-//            self.tableView.reloadData()
-//        }
-//    }
+    var displayRepos: [Repository]?{
+        didSet{
+            self.tableView.reloadData()
+        }
+    }
     
     @IBOutlet weak var searchRepos: UISearchBar!
     
@@ -39,7 +38,7 @@ class RepoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        self.searchRepos.delegate = self
+        self.searchRepos.delegate = self
         self.tableView.dataSource = self
         self.tableView.delegate = self
         
@@ -100,9 +99,8 @@ extension RepoViewController : UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return allRepos.count
         
-        //displayRepos?.count ??
+        return displayRepos?.count ?? allRepos.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -111,30 +109,38 @@ extension RepoViewController : UITableViewDataSource, UITableViewDelegate {
 
 }
 
-//extension RepoViewController : UISearchBarDelegate {
-//    
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
-//        if let searchedText = searchBar.text {
-//            self.displayRepos = self.allRepos.filter({($0.name.contains(searchText))})
-//        }
-//        if searchBar.text == "" {
-//            self.displayRepos = nil
-//        }
-//    }
-//    
-//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-//        self.displayRepos = nil
-//        
-//        //Resign First Responder is to show up the keyboard
-//        self.searchRepos.resignFirstResponder()
-//        
-//    }
-//    
-//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
-//        
-//        // resign the keyboard to disappear when clicked
-//        self.searchRepos.resignFirstResponder()
-//        
-//    }
-//    
-//}
+extension RepoViewController : UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
+        
+        if !searchText.validate() {
+            
+            let lastIndex = searchText.index(before: searchText.endIndex)
+            searchBar.text = searchText.substring(to: lastIndex)
+        
+        }
+        
+        if let searchedText = searchBar.text {
+            self.displayRepos = self.allRepos.filter({($0.name.contains(searchText))})
+        }
+        if searchBar.text == "" {
+            self.displayRepos = nil
+        }
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.displayRepos = nil
+        
+        //Resign First Responder is to show up the keyboard
+        self.searchRepos.resignFirstResponder()
+        
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
+        
+        // resign the keyboard to disappear when clicked
+        self.searchRepos.resignFirstResponder()
+        
+    }
+    
+}
