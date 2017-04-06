@@ -18,11 +18,11 @@ class RepoViewController: UIViewController {
     
     
     //for the search bar .. we want it to be flexible in search, we might return nil if we look up something that deosnt exitst
-    var displayRepos: [Repository]?{
-        didSet{
-            self.tableView.reloadData()
-        }
-    }
+//    var displayRepos: [Repository]?{
+//        didSet{
+//            self.tableView.reloadData()
+//        }
+//    }
     
     @IBOutlet weak var searchRepos: UISearchBar!
     
@@ -33,33 +33,27 @@ class RepoViewController: UIViewController {
         super.viewDidAppear(animated)
         
         update()
+
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.searchRepos.delegate = self
+//        self.searchRepos.delegate = self
         self.tableView.dataSource = self
         self.tableView.delegate = self
         
         let nib = UINib(nibName: RepoCell.identifier , bundle: Bundle.main)
         self.tableView.register(nib , forCellReuseIdentifier: RepoCell.identifier)
         
-        self.searchRepos.delegate = self
-        
-        print("Count of all allRepos: \(allRepos.count)")
-        
-        
     }
     
-    func update(){
-        print("Update repo controller here!")
-        
+    func update(){        
         GitHub.shared.getRepos { (repositories) in
-            print(repositories?.first?.name as Any)
-            
-            for repo in repositories! {
-                self.allRepos.append(repo)
+            if let repositories = repositories {
+                for repo in repositories {
+                    self.allRepos.append(repo)
+                }
             }
             //RepoCell.repoName.text = repositories?.first?.description
         }
@@ -70,6 +64,15 @@ class RepoViewController: UIViewController {
         
         if segue.identifier == RepoDetailViewController.identifier {
             segue.destination.transitioningDelegate = self as UIViewControllerTransitioningDelegate
+            
+            
+            if let selectedIndex = self.tableView.indexPathForSelectedRow?.row {
+                let selectedRepo = self.allRepos[selectedIndex]
+                
+                guard let destinationController = segue.destination as? RepoDetailViewController else { return }
+                
+                destinationController.repo = selectedRepo
+            }
         }
     }
 }
@@ -93,16 +96,13 @@ extension RepoViewController : UITableViewDataSource, UITableViewDelegate {
         repoCell.repo = repo
         
         return repoCell
-        
-        //        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        //
-        //        cell.textLabel?.text = displayRepos?
-        //        
 
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return displayRepos?.count ?? allRepos.count //if displayRepos nil the statement will return nil
+        return allRepos.count
+        
+        //displayRepos?.count ??
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -111,29 +111,30 @@ extension RepoViewController : UITableViewDataSource, UITableViewDelegate {
 
 }
 
-extension RepoViewController : UISearchBarDelegate {
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
-        if let searchedText = searchBar.text {
-            self.displayRepos = self.allRepos.filter({$0.name.contains(searchText)})
-        }
-        if searchBar.text == "" {
-            self.displayRepos = nil
-        }
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        self.displayRepos = nil
-        
-        //Resign First Responder is to show up the keyboard
-        self.searchRepos.resignFirstResponder()
-        
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
-        
-        // resign the keyboard to disappear when clicked
-        self.searchRepos.resignFirstResponder()
-        
-    }
-}
+//extension RepoViewController : UISearchBarDelegate {
+//    
+//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
+//        if let searchedText = searchBar.text {
+//            self.displayRepos = self.allRepos.filter({($0.name.contains(searchText))})
+//        }
+//        if searchBar.text == "" {
+//            self.displayRepos = nil
+//        }
+//    }
+//    
+//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+//        self.displayRepos = nil
+//        
+//        //Resign First Responder is to show up the keyboard
+//        self.searchRepos.resignFirstResponder()
+//        
+//    }
+//    
+//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
+//        
+//        // resign the keyboard to disappear when clicked
+//        self.searchRepos.resignFirstResponder()
+//        
+//    }
+//    
+//}

@@ -98,16 +98,6 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                     <textInputTraits key="textInputTraits"/>
                                 </searchBar>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RepoCell" id="CGf-FC-YxW" customClass="RepoCell" customModule="GitHub_Client" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="72" width="375" height="97"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CGf-FC-YxW" id="6DZ-jJ-OB2">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="96.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -133,12 +123,93 @@
                     <view key="view" contentMode="scaleToFill" id="bVa-EV-dFU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Repo Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="11R-bd-BZc">
+                                <rect key="frame" x="143" y="49" width="89" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pyq-vU-qRT">
+                                <rect key="frame" x="120" y="117" width="132" height="21"/>
+                                <string key="text">Repo Description
+</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Programming Language" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gg1-rU-T5I">
+                                <rect key="frame" x="94" y="190" width="184" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number Of Stars" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lKy-el-piQ">
+                                <rect key="frame" x="122" y="259" width="129" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="isFork: True or False" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DG5-3d-Qvp">
+                                <rect key="frame" x="109" y="323" width="154" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="createdAt: Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QEQ-TK-DFe">
+                                <rect key="frame" x="127" y="391" width="120" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="updated_at" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0UM-nq-BOI">
+                                <rect key="frame" x="143" y="460" width="86" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="forksCount" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pDi-KB-V6O">
+                                <rect key="frame" x="0.0" y="517" width="375" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="0UM-nq-BOI" firstAttribute="centerX" secondItem="Gg1-rU-T5I" secondAttribute="centerX" id="1P9-TT-RUU"/>
+                            <constraint firstItem="DG5-3d-Qvp" firstAttribute="top" secondItem="lKy-el-piQ" secondAttribute="bottom" constant="43" id="2Mu-i0-gkn"/>
+                            <constraint firstItem="Gg1-rU-T5I" firstAttribute="top" secondItem="pyq-vU-qRT" secondAttribute="bottom" constant="52" id="BPJ-PO-CPq"/>
+                            <constraint firstItem="pDi-KB-V6O" firstAttribute="centerX" secondItem="bVa-EV-dFU" secondAttribute="centerX" id="CZu-10-2P8"/>
+                            <constraint firstItem="WDe-4n-UHh" firstAttribute="top" secondItem="pDi-KB-V6O" secondAttribute="bottom" constant="129" id="Fmm-EK-Gwu"/>
+                            <constraint firstItem="pDi-KB-V6O" firstAttribute="top" secondItem="0UM-nq-BOI" secondAttribute="bottom" constant="36" id="IC9-H2-hiF"/>
+                            <constraint firstItem="0UM-nq-BOI" firstAttribute="centerX" secondItem="pyq-vU-qRT" secondAttribute="centerX" id="Jh7-Od-ebN"/>
+                            <constraint firstItem="lKy-el-piQ" firstAttribute="top" secondItem="Gg1-rU-T5I" secondAttribute="bottom" constant="48" id="Jjn-lK-2RE"/>
+                            <constraint firstItem="pyq-vU-qRT" firstAttribute="top" secondItem="11R-bd-BZc" secondAttribute="bottom" constant="47" id="WlO-Cj-kd6"/>
+                            <constraint firstItem="0UM-nq-BOI" firstAttribute="leading" secondItem="11R-bd-BZc" secondAttribute="leading" id="XU4-sy-WbN"/>
+                            <constraint firstItem="0UM-nq-BOI" firstAttribute="top" secondItem="QEQ-TK-DFe" secondAttribute="bottom" constant="48" id="aUq-51-rTU"/>
+                            <constraint firstItem="pyq-vU-qRT" firstAttribute="top" secondItem="bVa-EV-dFU" secondAttribute="top" constant="117" id="aiR-eX-v3b"/>
+                            <constraint firstItem="pDi-KB-V6O" firstAttribute="width" secondItem="bVa-EV-dFU" secondAttribute="width" id="kly-cG-DIV"/>
+                            <constraint firstItem="pDi-KB-V6O" firstAttribute="centerX" secondItem="QEQ-TK-DFe" secondAttribute="centerX" id="pfS-3M-bXE"/>
+                            <constraint firstItem="0UM-nq-BOI" firstAttribute="centerX" secondItem="lKy-el-piQ" secondAttribute="centerX" id="sjI-Gv-LXQ"/>
+                            <constraint firstItem="pDi-KB-V6O" firstAttribute="centerX" secondItem="11R-bd-BZc" secondAttribute="centerX" id="tvr-J4-ZFf"/>
+                            <constraint firstItem="0UM-nq-BOI" firstAttribute="centerX" secondItem="DG5-3d-Qvp" secondAttribute="centerX" id="ulF-QM-H3X"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="repoDateCreated" destination="QEQ-TK-DFe" id="Tc4-tU-ILV"/>
+                        <outlet property="repoDescription" destination="pyq-vU-qRT" id="Uoe-SF-LPP"/>
+                        <outlet property="repoForked" destination="DG5-3d-Qvp" id="jTz-Be-gKa"/>
+                        <outlet property="repoForkedTimes" destination="pDi-KB-V6O" id="v2h-Eb-Oe5"/>
+                        <outlet property="repoLanguage" destination="Gg1-rU-T5I" id="wC4-vy-yBt"/>
+                        <outlet property="repoName" destination="11R-bd-BZc" id="49C-Xf-Q4D"/>
+                        <outlet property="repoStars" destination="lKy-el-piQ" id="YHp-Fq-vmn"/>
+                        <outlet property="repoUpdatedAt" destination="0UM-nq-BOI" id="mEm-4y-yU3"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c6I-I2-yCW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2086" y="90"/>
+            <point key="canvasLocation" x="2085.5999999999999" y="89.505247376311857"/>
         </scene>
     </scenes>
     <resources>
