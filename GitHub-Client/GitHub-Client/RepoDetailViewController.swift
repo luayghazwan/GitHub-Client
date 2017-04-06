@@ -26,11 +26,27 @@ class RepoDetailViewController: UIViewController {
     
     @IBOutlet weak var repoForkedTimes: UILabel!
     
+  
+    @IBOutlet weak var dismissOutlet: UIButton!
+
+    
+    @IBAction func closeDetailController(_ sender: Any) {
+        
+        navigationController?.popViewController(animated: true)
+        dismiss(animated: true, completion: nil)
+    }
 
     var repo : Repository!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.dismissOutlet.layer.shadowColor = UIColor.gray.cgColor
+        self.dismissOutlet.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
+        self.dismissOutlet.layer.shadowOpacity = 1.0
+        self.dismissOutlet.layer.shadowRadius = 2
+        self.dismissOutlet.layer.masksToBounds = true
+        self.dismissOutlet.clipsToBounds = false
         
         if let repo = repo {
             self.repoName.text = repo.name
@@ -54,7 +70,5 @@ class RepoDetailViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
-
-
 
 }
