@@ -15,8 +15,7 @@ class RepoViewController: UIViewController {
             self.tableView.reloadData()
         }
     }
-    
-    //for the search bar .. we want it to be flexible in search, we might return nil if we look up something that deosnt exitst
+
     var displayRepos: [Repository]?{
         didSet{
             self.tableView.reloadData()
@@ -24,15 +23,11 @@ class RepoViewController: UIViewController {
     }
     
     @IBOutlet weak var searchRepos: UISearchBar!
-    
     @IBOutlet weak var tableView: UITableView!
-    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         update()
-
     }
     
     override func viewDidLoad() {
@@ -44,7 +39,6 @@ class RepoViewController: UIViewController {
         
         let nib = UINib(nibName: RepoCell.identifier , bundle: Bundle.main)
         self.tableView.register(nib , forCellReuseIdentifier: RepoCell.identifier)
-        
     }
     
     func update(){        
@@ -54,7 +48,6 @@ class RepoViewController: UIViewController {
                     self.allRepos.append(repo)
                 }
             }
-            //RepoCell.repoName.text = repositories?.first?.description
         }
     }
     
@@ -63,7 +56,6 @@ class RepoViewController: UIViewController {
         
         if segue.identifier == RepoDetailViewController.identifier {
             segue.destination.transitioningDelegate = self as UIViewControllerTransitioningDelegate
-            
             
             if let selectedIndex = self.tableView.indexPathForSelectedRow?.row {
                 let selectedRepo = self.allRepos[selectedIndex]
@@ -99,7 +91,6 @@ extension RepoViewController : UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return displayRepos?.count ?? allRepos.count
     }
     
@@ -114,14 +105,13 @@ extension RepoViewController : UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
         
         if !searchText.validate() {
-            
             let lastIndex = searchText.index(before: searchText.endIndex)
             searchBar.text = searchText.substring(to: lastIndex)
         
         }
         
         if let searchedText = searchBar.text {
-            self.displayRepos = self.allRepos.filter({($0.name.contains(searchText))})
+            self.displayRepos = self.allRepos.filter({($0.name.contains(searchedText))})
         }
         if searchBar.text == "" {
             self.displayRepos = nil
@@ -130,17 +120,11 @@ extension RepoViewController : UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         self.displayRepos = nil
-        
-        //Resign First Responder is to show up the keyboard
         self.searchRepos.resignFirstResponder()
-        
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
-        
-        // resign the keyboard to disappear when clicked
         self.searchRepos.resignFirstResponder()
-        
     }
     
 }

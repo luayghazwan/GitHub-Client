@@ -20,24 +20,14 @@ class CustomTransition : NSObject, UIViewControllerTransitioningDelegate {
     }
     
     func interruptibleAnimator(using transitionContext: UIViewControllerContextTransitioning) {
-        
         guard let toViewController = transitionContext.viewController(forKey: .to) else { return }
-        
         transitionContext.containerView.addSubview(toViewController.view)
         
-        
-        //fade to our view controller
         toViewController.view.alpha = 0.0
-        
         UIView.animate(withDuration: self.duration, animations: {
-            
             toViewController.view.alpha = 1.0
-            
         }) { (finished) in
             transitionContext.completeTransition(finished)
         }
-        
-
-        
     }
 }
