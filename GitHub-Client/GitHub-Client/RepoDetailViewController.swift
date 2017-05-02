@@ -13,31 +13,18 @@ class RepoDetailViewController: UIViewController {
     
     var repo : Repository!
 
-    
     @IBOutlet weak var repoName: UILabel!
-    
     @IBOutlet weak var repoDescription: UILabel!
-    
     @IBOutlet weak var repoLanguage: UILabel!
-    
     @IBOutlet weak var repoStars: UILabel!
-    
     @IBOutlet weak var repoForked: UILabel!
-    
     @IBOutlet weak var repoDateCreated: UILabel!
-    
     @IBOutlet weak var repoUpdatedAt: UILabel!
-    
     @IBOutlet weak var repoForkedTimes: UILabel!
-    
-  
     @IBOutlet weak var dismissOutlet: UIButton!
-
     @IBAction func moreDetailsPressed(_ sender: Any) {
         
         guard let repo = repo else {return}
-        
-//        presentWebViewControllerWith(urlString: repo.repoUrlString)
         
         presentSafariViewControllerWith(urlString: repo.repoUrlString)
         
@@ -72,8 +59,6 @@ class RepoDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        self.UIViewControllerTransitioningDelegate = self
-        
         self.dismissOutlet.layer.shadowColor = UIColor.gray.cgColor
         self.dismissOutlet.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
         self.dismissOutlet.layer.shadowOpacity = 1.0
@@ -87,7 +72,6 @@ class RepoDetailViewController: UIViewController {
             self.repoLanguage.text = repo.language
             self.repoStars.text = repo.starGazers
             
-            //Repo is forked
             if repo.isForked == true {
                 self.repoForked.text = "This Repo has been forked"
             } else {
@@ -99,13 +83,5 @@ class RepoDetailViewController: UIViewController {
             
             self.repoForkedTimes.text = "This Repository has been forked \(String(describing: repo.forksCount))"
         }
-        
-
-        // Do any additional setup after loading the view.
     }
-
-}
-
-extension RepoDetailViewController : UIViewControllerTransitioningDelegate {
-//    func anim
 }
