@@ -9,14 +9,19 @@
 import UIKit
 
 class GitHubAuthController: UIViewController {
-
-    @IBOutlet weak var loginButton: UIButton!
-    @IBAction func printTokenPressed(_ sender: Any) {
-    }
     
-    @IBAction func loginButtonPressed(_ sender: Any) {
-        let parameters = ["scope" : "email,user,repo"]
-        GitHub.shared.oAuthRequestWith(parameters: parameters)
+    @IBOutlet weak var loginButton: UIButton!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        if GitHub.shared.token == "" {
+            let parameters = ["scope": "email,user,repo"]
+            GitHub.shared.oAuthRequestWith(parameters: parameters)
+        } else {
+            self.loginButton.backgroundColor = UIColor(rgb: 0xCCCCCC)
+            self.loginButton.isUserInteractionEnabled = false
+            self.loginButton.setTitle("Logged In", for: .disabled);
+        }
     }
     
     func dismissAuthController(){
@@ -24,13 +29,13 @@ class GitHubAuthController: UIViewController {
         self.removeFromParentViewController()
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        let tokenChecker = UserDefaults.standard.getAccessToken()
-        
-        if tokenChecker != nil {
-            self.loginButton.backgroundColor = UIColor(rgb: 0xCCCCCC)
-            self.loginButton.isUserInteractionEnabled = false
-        }
+    @IBAction func printTokenPressed(_ sender: Any) {
+        let token = UserDefaults.standard.getAccessToken()
+        print(token ?? "No Token Found")
+    }
+    
+    @IBAction func loginButtonPressed(_ sender: Any) {
+        let parameters = ["scope" : "email,user,repo"]
+        GitHub.shared.oAuthRequestWith(parameters: parameters)
     }
 }
