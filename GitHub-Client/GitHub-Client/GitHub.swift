@@ -26,6 +26,8 @@ class GitHub {
     private var session: URLSession
     private var components: URLComponents
     
+    var token = ""
+    
     static let shared = GitHub()
     var repositoriesArray = [Repository]()
     
