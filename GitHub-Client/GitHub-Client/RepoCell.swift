@@ -11,9 +11,7 @@ import UIKit
 class RepoCell: UITableViewCell {
     
     @IBOutlet weak var repoName: UILabel!
-
     @IBOutlet weak var repoDescription: UILabel!
-    
     @IBOutlet weak var repoLanguage: UILabel!
 
     var repo: Repository! {

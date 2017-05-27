@@ -88,11 +88,12 @@
 		015DFB511E92C94A00EFCD0A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				012215A81E9419560085CE8A /* Repository.swift */,
+				015DFB4F1E92C90900EFCD0A /* GitHub.swift */,
+				015D90151EB8205B0025383F /* GitHubToken.swift */,
 				01FEBFFF1E9570770074FA26 /* CustomTransition.swift */,
 				019C33671E932CCF0071D7BC /* UIExtensions.swift */,
-				015DFB4F1E92C90900EFCD0A /* GitHub.swift */,
-				012215A81E9419560085CE8A /* Repository.swift */,
-				015D90151EB8205B0025383F /* GitHubToken.swift */,
+				015DFB581E92EC1600EFCD0A /* FoundationExtensions.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -100,12 +101,11 @@
 		015DFB541E92CE8900EFCD0A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				01FEBFFD1E956E9D0074FA26 /* RepoDetailViewController.swift */,
-				019304C21E96B33300B2DB04 /* WebViewController.swift */,
 				013BE5E11E940C0F00AE4512 /* RepoViewController.swift */,
-				015DFB581E92EC1600EFCD0A /* FoundationExtensions.swift */,
-				015DFB3D1E92B0A000EFCD0A /* AppDelegate.swift */,
+				01FEBFFD1E956E9D0074FA26 /* RepoDetailViewController.swift */,
 				015DFB521E92CE6800EFCD0A /* GitHubAuthController.swift */,
+				019304C21E96B33300B2DB04 /* WebViewController.swift */,
+				015DFB3D1E92B0A000EFCD0A /* AppDelegate.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
