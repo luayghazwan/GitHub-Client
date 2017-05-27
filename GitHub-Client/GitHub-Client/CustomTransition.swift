@@ -19,7 +19,7 @@ class CustomTransition : NSObject, UIViewControllerTransitioningDelegate {
         return self.duration
     }
     
-    func interruptibleAnimator(using transitionContext: UIViewControllerContextTransitioning) {
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         guard let toViewController = transitionContext.viewController(forKey: .to) else { return }
         transitionContext.containerView.addSubview(toViewController.view)
         
