@@ -10,29 +10,22 @@ import UIKit
 
 class RepoViewController: UIViewController {
     
+    @IBOutlet weak var searchRepos: UISearchBar!
+    @IBOutlet weak var tableView: UITableView!
+    
     var allRepos = [Repository]() {
         didSet {
             self.tableView.reloadData()
         }
     }
-
     var displayRepos: [Repository]?{
         didSet{
             self.tableView.reloadData()
         }
     }
     
-    @IBOutlet weak var searchRepos: UISearchBar!
-    @IBOutlet weak var tableView: UITableView!
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        update()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.searchRepos.delegate = self
         self.tableView.dataSource = self
         self.tableView.delegate = self
@@ -41,13 +34,14 @@ class RepoViewController: UIViewController {
         self.tableView.register(nib , forCellReuseIdentifier: RepoCell.identifier)
     }
     
-    func update(){        
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        update()
+    }
+    
+    func update(){
         GitHub.shared.getRepos { (repositories) in
-            if let repositories = repositories {
-                for repo in repositories {
-                    self.allRepos.append(repo)
-                }
-            }
+            self.allRepos = repositories?.sorted(by: { $0.creationDate! > $1.creationDate!}) ?? []
         }
     }
     
@@ -68,24 +62,21 @@ class RepoViewController: UIViewController {
     }
 }
 
+//MARK: RepoViewController Transitioning Delegate
 extension RepoViewController : UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
         return CustomTransition(duration: 1.0) as? UIViewControllerAnimatedTransitioning
-        
     }
 }
 
+//MARK: RepoViewController Delegate and DataSource
 extension RepoViewController : UITableViewDataSource, UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let repoCell = tableView.dequeueReusableCell(withIdentifier: RepoCell.identifier, for: indexPath) as! RepoCell
-        
         let repo = self.allRepos[indexPath.row]
-        
         repoCell.repo = repo
-        
         return repoCell
 
     }
@@ -97,9 +88,9 @@ extension RepoViewController : UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.performSegue(withIdentifier: RepoDetailViewController.identifier, sender: nil)
     }
-
 }
 
+//MARK: RepoViewController SearchBar Delegate
 extension RepoViewController : UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
@@ -107,12 +98,12 @@ extension RepoViewController : UISearchBarDelegate {
         if !searchText.validate() {
             let lastIndex = searchText.index(before: searchText.endIndex)
             searchBar.text = searchText.substring(to: lastIndex)
-        
         }
         
         if let searchedText = searchBar.text {
             self.displayRepos = self.allRepos.filter({($0.name.contains(searchedText))})
         }
+    
         if searchBar.text == "" {
             self.displayRepos = nil
         }
