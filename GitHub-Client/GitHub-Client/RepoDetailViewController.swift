@@ -25,7 +25,6 @@ class RepoDetailViewController: UIViewController {
     @IBAction func moreDetailsPressed(_ sender: Any) {
         
         guard let repo = repo else {return}
-        
         presentSafariViewControllerWith(urlString: repo.repoUrlString)
         
     }
@@ -42,38 +41,34 @@ class RepoDetailViewController: UIViewController {
         if let repo = repo {
             self.repoName.text = repo.name
             self.repoDescription.text = repo.description
-            self.repoLanguage.text = repo.language
-            self.repoStars.text = repo.starGazers
+            self.repoLanguage.text = "Language: \(repo.language!)"
+            self.repoStars.text = "Number of stars: \(String(repo.starGazers!))"
             
             if repo.isForked == true {
-                self.repoForked.text = "This Repo has been forked"
-                if let forks = repo.forksCount {
-                    self.repoForkedTimes.text = " \(String(describing: forks)) times."
-                }
+                self.repoForked.text = "This Repo is Forked"
+                self.repoForkedTimes.text = String(repo.forksCount!)
             } else {
                 self.repoForked.text = "This Repo has not been forked yet"
                 self.repoForkedTimes.text = ""
             }
             
-            self.repoDateCreated.text = repo.creationDate
-            self.repoUpdatedAt.text = repo.updateDate
+            let formatter = DateFormatter()
+            formatter.dateStyle = .medium
+            
+            self.repoDateCreated.text = "Creation Date: \(formatter.string(from: repo.creationDate!))"
+            self.repoUpdatedAt.text = "Last Updated on: \(formatter.string(from: repo.updateDate!))"
         }
     }
     
     func presentSafariViewControllerWith(urlString: String) {
         guard let url = URL(string: urlString) else { return }
-        
         let safariController = SFSafariViewController(url: url)
-        
         self.present(safariController, animated: true, completion: nil)
     }
     
     func presentWebViewControllerWith(urlString: String){
-        
         let webController = WebViewController()
-        
         webController.url = urlString
-        
         self.present(webController, animated: true, completion: nil)
     }
     
@@ -82,6 +77,4 @@ class RepoDetailViewController: UIViewController {
         navigationController?.popViewController(animated: true)
         dismiss(animated: true, completion: nil)
     }
-
-    
 }
