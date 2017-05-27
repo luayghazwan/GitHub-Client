@@ -13,10 +13,10 @@ class Repository {
     let name: String
     let description: String?
     let language: String?
-    let starGazers: String?
+    let starGazers: Int?
     let isForked: Bool?
-    var creationDate: String?
-    var updateDate: String?
+    var creationDate: Date?
+    var updateDate: Date?
     let forksCount: Int?
     let repoUrlString : String
     
@@ -27,14 +27,19 @@ class Repository {
             self.description = json["description"] as? String
             self.language = json["language"] as? String
             
-            self.starGazers = json["stargazers_url"] as? String
+            self.starGazers = json["stargazers_count"] as? Int
             self.isForked = json["fork"] as? Bool
             
-            self.creationDate = json["created_at"] as? String
-            self.creationDate = creationDate?.components(separatedBy: "T").first
+            guard let creationDateString = json["created_at"] as? String else { return nil }
+            guard let updateDateString = json["updated_at"] as? String else { return nil }
+
+            let dateFormatter = ISO8601DateFormatter()
             
-            self.updateDate = json["updated_at"] as? String
-            self.updateDate = updateDate?.components(separatedBy: "T").first
+            guard let creationDate = dateFormatter.date(from: creationDateString) else { return nil }
+            self.creationDate = creationDate
+            
+            guard let updateDate = dateFormatter.date(from: updateDateString) else { return nil }
+            self.updateDate = updateDate
             
             self.forksCount = json["forks_count"] as? Int
             self.repoUrlString = json["html_url"] as? String ?? "https://www.github.com"
