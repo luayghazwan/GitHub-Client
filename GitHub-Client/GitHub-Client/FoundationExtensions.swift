@@ -35,7 +35,7 @@ extension Date {
         return formatterWith(style: .long).string(from: self)
     }
     
-    private func formatterWith(style: DateFormatter.Style) -> DateFormatter {
+    func formatterWith(style: DateFormatter.Style) -> DateFormatter {
         let formatter = DateFormatter()
         formatter.dateStyle = style
         return formatter
@@ -59,6 +59,5 @@ extension String {
         } catch {
             return false
         }
-        
     }
 }
