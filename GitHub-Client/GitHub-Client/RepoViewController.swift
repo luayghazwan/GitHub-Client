@@ -18,7 +18,7 @@ class RepoViewController: UIViewController {
             self.tableView.reloadData()
         }
     }
-    var displayRepos: [Repository]?{
+    var filteredRepos: [Repository]?{
         didSet{
             self.tableView.reloadData()
         }
@@ -26,12 +26,13 @@ class RepoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.searchRepos.delegate = self
         self.tableView.dataSource = self
         self.tableView.delegate = self
-        
+        self.searchRepos.delegate = self
+
         let nib = UINib(nibName: RepoCell.identifier , bundle: Bundle.main)
         self.tableView.register(nib , forCellReuseIdentifier: RepoCell.identifier)
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -41,7 +42,7 @@ class RepoViewController: UIViewController {
     
     func update(){
         GitHub.shared.getRepos { (repositories) in
-            self.allRepos = repositories?.sorted(by: { $0.creationDate! > $1.creationDate!}) ?? []
+            self.allRepos = repositories?.sorted(by: { $0.creationDate > $1.creationDate}) ?? []
         }
     }
     
@@ -72,50 +73,58 @@ extension RepoViewController : UIViewControllerTransitioningDelegate {
 
 //MARK: RepoViewController Delegate and DataSource
 extension RepoViewController : UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let repoCell = tableView.dequeueReusableCell(withIdentifier: RepoCell.identifier, for: indexPath) as! RepoCell
-        let repo = self.allRepos[indexPath.row]
-        repoCell.repo = repo
-        return repoCell
-
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return filteredRepos?.count ?? allRepos.count
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return displayRepos?.count ?? allRepos.count
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: RepoCell.identifier, for: indexPath) as! RepoCell
+        
+        cell.repo = filteredRepos?[indexPath.row] ?? allRepos[indexPath.row]
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.performSegue(withIdentifier: RepoDetailViewController.identifier, sender: nil)
+        self.tableView.deselectRow(at: indexPath, animated: false)
     }
 }
 
 //MARK: RepoViewController SearchBar Delegate
 extension RepoViewController : UISearchBarDelegate {
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         if !searchText.validate() {
             let lastIndex = searchText.index(before: searchText.endIndex)
             searchBar.text = searchText.substring(to: lastIndex)
         }
         
-        if let searchedText = searchBar.text {
-            self.displayRepos = self.allRepos.filter({($0.name.contains(searchedText))})
-        }
-    
         if searchBar.text == "" {
-            self.displayRepos = nil
+            filteredRepos = nil
+            return
         }
+        
+        guard var filterText = searchBar.text else { return }
+        filterText = filterText.lowercased()
+        
+        self.filteredRepos = self.allRepos.filter({
+            $0.name.lowercased().contains(filterText) ||
+            $0.description.lowercased().contains(filterText) ||
+            $0.language.lowercased().contains(filterText)
+        })
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(true, animated: true)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        self.displayRepos = nil
-        self.searchRepos.resignFirstResponder()
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
-        self.searchRepos.resignFirstResponder()
+        searchBar.text = ""
+        self.filteredRepos = nil
+        searchBar.setShowsCancelButton(false, animated: true)
+        searchBar.resignFirstResponder()
     }
     
 }
