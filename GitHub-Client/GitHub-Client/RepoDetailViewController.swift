@@ -41,12 +41,12 @@ class RepoDetailViewController: UIViewController {
         if let repo = repo {
             self.repoName.text = repo.name
             self.repoDescription.text = repo.description
-            self.repoLanguage.text = "Language: \(repo.language!)"
-            self.repoStars.text = "Number of stars: \(String(repo.starGazers!))"
+            self.repoLanguage.text = "Language: \(repo.language)"
+            self.repoStars.text = "Number of stars: \(String(repo.starGazers))"
             
             if repo.isForked == true {
                 self.repoForked.text = "This Repo is Forked"
-                self.repoForkedTimes.text = String(repo.forksCount!)
+                self.repoForkedTimes.text = String(repo.forksCount)
             } else {
                 self.repoForked.text = "This Repo has not been forked yet"
                 self.repoForkedTimes.text = ""
@@ -55,8 +55,8 @@ class RepoDetailViewController: UIViewController {
             let formatter = DateFormatter()
             formatter.dateStyle = .medium
             
-            self.repoDateCreated.text = "Creation Date: \(formatter.string(from: repo.creationDate!))"
-            self.repoUpdatedAt.text = "Last Updated on: \(formatter.string(from: repo.updateDate!))"
+            self.repoDateCreated.text = "Creation Date: \(formatter.string(from: repo.creationDate))"
+            self.repoUpdatedAt.text = "Last Updated on: \(formatter.string(from: repo.updateDate))"
         }
     }
     
